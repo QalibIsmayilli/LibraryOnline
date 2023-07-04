@@ -18,4 +18,8 @@ public class CategoryService {
         return categoryRepository.findById(id).orElseThrow();
     }
 
+    protected Category getCategoryByName(String categoryName){
+        return categoryRepository.getCategoryByName(categoryName);
+    }
+
 }

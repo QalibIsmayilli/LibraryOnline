@@ -10,7 +10,7 @@ import java.time.LocalDateTime
 
 @Entity
 @Table(name = "categories")
-data class Category(
+data class Category private constructor(
 
     @Id
     @Column(name = "id")
@@ -32,4 +32,20 @@ data class Category(
     @OneToMany(mappedBy = "category", cascade = [CascadeType.ALL])
     @JsonIgnore
     val books: List<Book>?
-)
+){
+    data class Builder(
+        var id: String? = null,
+        var createdDate: LocalDateTime?= null,
+        var updateDate: LocalDateTime?= null,
+        var name: String? = null,
+        var books: List<Book>? = null) {
+
+        fun id(id: String) = apply { this.id = id }
+        fun createdDate(createdDate: LocalDateTime) = apply { this.createdDate = createdDate }
+        fun updateDate(updateDate: LocalDateTime) = apply { this.updateDate = updateDate }
+        fun name(name: String) = apply { this.name = name }
+        fun books(books: List<Book>) = apply { this.books = books }
+
+        fun build() = Category(id, createdDate, updateDate, name,books)
+    }
+}

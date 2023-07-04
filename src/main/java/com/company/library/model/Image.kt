@@ -8,7 +8,7 @@ import java.time.LocalDateTime
 
 @Entity
 @Table(name = "images")
-data class Image(
+data class Image private constructor(
     @Id
     @Column(name = "id")
     @GeneratedValue(generator = "UUID")
@@ -24,12 +24,20 @@ data class Image(
     val updateDate: LocalDateTime?,
 
     @Column(name = "umage_url")
-    val imageUrl : String
+    val imageUrl : String?
 ){
-    constructor(imageUrl: String):this(
-        id="",
-        createdDate = LocalDateTime.now(),
-        updateDate = LocalDateTime.now(),
-        imageUrl = imageUrl
-    )
+
+    data class Builder(
+        var id: String? = null,
+        var createdDate: LocalDateTime?= null,
+        var updateDate: LocalDateTime?= null,
+        var imageUrl: String? = null) {
+
+        fun id(id: String) = apply { this.id = id }
+        fun createdDate(createdDate: LocalDateTime) = apply { this.createdDate = createdDate }
+        fun updateDate(updateDate: LocalDateTime) = apply { this.updateDate = updateDate }
+        fun imageUrl(imageUrl: String) = apply { this.imageUrl = imageUrl }
+
+        fun build() = Image(id, createdDate, updateDate, imageUrl)
+    }
 }
