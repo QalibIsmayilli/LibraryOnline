@@ -7,20 +7,22 @@ import java.io.File
 
 data class BookSaveRequest(
 
-    @NotBlank
+    @field:NotBlank
     val title: String?,
-    @NotBlank
+    @field:NotBlank
     val authorName: String?,
-    @NotNull
+    @field:NotNull
     val bookStatus: BookStatus?,
-    @NotBlank
+    @field:NotBlank
     val publisher: String?,
-    @NotNull
+    @field:NotNull
     val lastPageNumber: Int?,
-    @NotNull
+    @field:NotNull
     val totalPage: Int?,
-    @NotNull
+    @field:NotNull
     val categoryId: String?,
     val imageFile: File?
 
-    )
+) {
+
+}

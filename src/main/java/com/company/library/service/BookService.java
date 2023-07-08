@@ -4,6 +4,7 @@ import com.company.library.dto.BookListItemResponse;
 import com.company.library.dto.BookResponse;
 import com.company.library.dto.requests.BookSaveRequest;
 import com.company.library.model.Book;
+import com.company.library.model.BookStatus;
 import com.company.library.model.Category;
 import com.company.library.repository.BookRepository;
 import jakarta.transaction.Transactional;
@@ -26,7 +27,7 @@ public class BookService {
     }
 
     @Transactional
-    public BookListItemResponse save(BookSaveRequest bookSaveRequest) throws IOException {
+    public BookListItemResponse save(BookSaveRequest bookSaveRequest){
 
         Book book = new Book.Builder().title(bookSaveRequest.getTitle()).authorName(bookSaveRequest.getAuthorName())
                 .bookStatus(bookSaveRequest.getBookStatus()).publisher(bookSaveRequest.getPublisher())
@@ -42,25 +43,34 @@ public class BookService {
 
     }
 
-    public List<BookResponse> listBooks(int pageNo, int size) {
-        List<Book> books = bookRepository.findAll(PageRequest.of(pageNo - 1, size)).getContent();
-
-
-        List<BookResponse> result = books.stream().map(b -> new BookResponse.Builder().title(b.getTitle())
-                        .authorName(b.getAuthorName()).imageUrl(b.getImage().getImageUrl()).build())
+    private static List<BookResponse> convertToResponse(List<Book> books) {
+        return books.stream().map(b -> new BookResponse.Builder().id(b.getId())
+                        .title(b.getTitle()).authorName(b.getAuthorName()).imageUrl(b.getImage().getImageUrl()).build())
                 .collect(Collectors.toList());
+    }
 
-        return result;
+    public List<BookResponse> listBooks(Integer pageNo, Integer size) {
+        List<Book> books = bookRepository.findAll(PageRequest.of(pageNo - 1, size)).getContent();
+        return convertToResponse(books);
     }
 
     public List<BookResponse> searchByCategory(String categoryName) {
-        Category category = categoryService.getCategoryByName(categoryName);
-
-        List<Book> books = category.getBooks();
-
-        List<BookResponse> result = books.stream().map(b -> new BookResponse.Builder().id(b.getId())
-                .title(b.getTitle()).authorName(b.getAuthorName()).imageUrl(b.getImage().getImageUrl()).build())
-                .collect(Collectors.toList());
-        return result;
+        List<Book> books = categoryService.getCategoryByName(categoryName).getBooks();
+        return convertToResponse(books);
     }
+
+    public List<BookResponse> searchByBookStatus(BookStatus bookStatus) {
+        List<Book> books = bookRepository.getBooksByBookStatus(bookStatus);
+        return convertToResponse(books);
+    }
+
+    public List<BookResponse> searchByTitle(String title){
+        List<Book> books = bookRepository.getBooksByTitle(title);
+        return convertToResponse(books);
+    }
+
+
+
+
+
 }

@@ -31,7 +31,7 @@ data class Book private constructor(
     val authorName: String?,
 
     @Column(name = "book_status")
-    @Enumerated(value = EnumType.STRING)
+    @Enumerated(EnumType.STRING)
     val bookStatus: BookStatus?,
 
     @Column(name = "publisher")
@@ -43,7 +43,6 @@ data class Book private constructor(
     @Column(name = "total_page")
     val totalPage: Int?,
 
-    @Column(name = "category")
     @ManyToOne(fetch = FetchType.LAZY, cascade = [CascadeType.ALL])
     @JoinColumn(name = "category")
     val category: Category?,
