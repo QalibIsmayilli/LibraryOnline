@@ -70,20 +70,18 @@ data class Book private constructor(
         var image: Image? = null,
         var userId: String? = null ) {
 
-        fun id(id: String) = apply { this.id = id }
-        fun createdDate(createdDate: LocalDateTime) = apply { this.createdDate = createdDate }
-        fun updateDate(updateDate: LocalDateTime) = apply { this.updateDate = updateDate }
-        fun title(title: String) = apply { this.title = title }
-        fun authorName(authorName: String) = apply { this.authorName = authorName }
-        fun bookStatus(bookStatus: BookStatus) = apply { this.bookStatus = bookStatus }
-        fun publisher(publisher: String) = apply { this.publisher = publisher }
-        fun lastPageNumber(lastPageNumber: Int) = apply { this.lastPageNumber = lastPageNumber }
-        fun totalPage(totalPage: Int) = apply { this.totalPage = totalPage }
-        fun category(category: Category) = apply { this.category = category }
-        fun image(image: Image) = apply { this.image = image }
-        fun userId(userId: String) = apply { this.userId = userId }
-
-
+        fun id(id: String?) = apply { this.id = id }
+        fun createdDate(createdDate: LocalDateTime?) = apply { this.createdDate = createdDate }
+        fun updateDate(updateDate: LocalDateTime?) = apply { this.updateDate = updateDate }
+        fun title(title: String?) = apply { this.title = title }
+        fun authorName(authorName: String?) = apply { this.authorName = authorName }
+        fun bookStatus(bookStatus: BookStatus?) = apply { this.bookStatus = bookStatus }
+        fun publisher(publisher: String?) = apply { this.publisher = publisher }
+        fun lastPageNumber(lastPageNumber: Int?) = apply { this.lastPageNumber = lastPageNumber }
+        fun totalPage(totalPage: Int?) = apply { this.totalPage = totalPage }
+        fun category(category: Category?) = apply { this.category = category }
+        fun image(image: Image?) = apply { this.image = image }
+        fun userId(userId: String?) = apply { this.userId = userId }
 
 
         fun build() = Book(id, createdDate, updateDate, title, authorName

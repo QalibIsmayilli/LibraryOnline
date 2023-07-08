@@ -5,13 +5,13 @@ import com.company.library.dto.BookResponse;
 import com.company.library.dto.requests.BookSaveRequest;
 import com.company.library.model.Book;
 import com.company.library.model.BookStatus;
-import com.company.library.model.Category;
 import com.company.library.repository.BookRepository;
 import jakarta.transaction.Transactional;
+import org.jetbrains.annotations.NotNull;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Service;
 
-import java.io.IOException;
+
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -43,11 +43,14 @@ public class BookService {
 
     }
 
-    private static List<BookResponse> convertToResponse(List<Book> books) {
+    private static List<BookResponse> convertToResponse(@NotNull List<Book> books) {
         return books.stream().map(b -> new BookResponse.Builder().id(b.getId())
-                        .title(b.getTitle()).authorName(b.getAuthorName()).imageUrl(b.getImage().getImageUrl()).build())
+                        .title(b.getTitle()).authorName(b.getAuthorName())
+                        .imageUrl(b.getImage().getImageUrl()).build())
                 .collect(Collectors.toList());
     }
+
+
 
     public List<BookResponse> listBooks(Integer pageNo, Integer size) {
         List<Book> books = bookRepository.findAll(PageRequest.of(pageNo - 1, size)).getContent();

@@ -21,7 +21,9 @@ public class LibraryApplication implements CommandLineRunner {
 
     @Override
     public void run(String... args) throws Exception {
-        Category category = categoryRepository.save(new Category.Builder().id("jcsjdsc").name("Macera").build());
-        System.out.println(category);
+
+//        Category category = categoryRepository.save(new Category.Builder().id("jcsjdsc").name("Macera").build());
+//        System.out.println(category);
     }
+
 }

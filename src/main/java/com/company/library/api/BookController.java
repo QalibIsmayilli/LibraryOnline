@@ -12,6 +12,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.Optional;
 
 @RestController
 @RequestMapping("api/v1/book")
@@ -39,8 +40,8 @@ public class BookController {
         return ResponseEntity.ok(bookService.listBooks(pageNo, size));
     }
 
-    @GetMapping("/list/{categoryName}")
-    public ResponseEntity<List<BookResponse>> searchByCategory(@PathVariable("categoryName") String categoryName){
+    @GetMapping("/searchByCategoryName")
+    public ResponseEntity<List<BookResponse>> searchByCategory(@RequestParam String categoryName){
         return ResponseEntity.ok(bookService.searchByCategory(categoryName));
     }
 
@@ -50,8 +51,8 @@ public class BookController {
         return ResponseEntity.ok(bookService.searchByBookStatus(bookStatus));
     }
 
-    @GetMapping("/list/{title}")
-    public ResponseEntity<List<BookResponse>> searchByTitle(@PathVariable("title") String title ){
+    @GetMapping("/searchByTitle")
+    public ResponseEntity<List<BookResponse>> searchByTitle(@RequestParam String title ){
         return ResponseEntity.ok(bookService.searchByTitle(title));
     }
 
