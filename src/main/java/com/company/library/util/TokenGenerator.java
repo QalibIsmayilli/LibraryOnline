@@ -4,7 +4,7 @@ import com.auth0.jwt.JWT;
 import com.auth0.jwt.JWTVerifier;
 import com.auth0.jwt.algorithms.Algorithm;
 import com.auth0.jwt.interfaces.DecodedJWT;
-import com.company.library.exception.NotFoundExceptionHandler;
+import com.company.library.exception.GenericException;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.HttpStatus;
 import org.springframework.security.core.Authentication;
@@ -46,7 +46,7 @@ public class TokenGenerator {
             return verifier.verify(token);
 
         } catch (Exception ex) {
-            throw new NotFoundExceptionHandler(HttpStatus.BAD_REQUEST,ex.getMessage());
+            throw new GenericException(HttpStatus.BAD_REQUEST,ex.getMessage());
         }
     }
 

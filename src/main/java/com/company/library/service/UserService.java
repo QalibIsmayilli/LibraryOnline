@@ -1,12 +1,15 @@
 package com.company.library.service;
 
-import com.company.library.configure.EncoderConfig;
 import com.company.library.dto.UserDto;
 import com.company.library.dto.requests.UserSaveRequest;
+import com.company.library.exception.GenericException;
 import com.company.library.model.User;
 import com.company.library.repository.UserRepository;
+import org.springframework.http.HttpStatus;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
+
+import java.util.Optional;
 
 @Service
 public class UserService {
@@ -25,5 +28,11 @@ public class UserService {
                 .role(userSaveRequest.getRole()).build());
 
         return new UserDto(user.getUsername(),user.getEmail(),user.getRole());
+    }
+
+    public User findUserByUsername(String username){
+        return userRepository.findUserByUsername(username)
+                .orElseThrow(()-> new GenericException(HttpStatus.NOT_FOUND,"user not found by given username")
+                );
     }
 }
