@@ -35,4 +35,9 @@ public class UserService {
                 .orElseThrow(()-> new GenericException(HttpStatus.NOT_FOUND,"user not found by given username")
                 );
     }
+
+    public UserDto findUserDtoByUsername(String username){
+        User user = findUserByUsername(username);
+        return new UserDto(user.getUsername(),user.getEmail(),user.getRole());
+    }
 }

@@ -53,7 +53,7 @@ data class User(
         fun id(id: String?) = apply { this.id = id }
         fun createdDate(createdDate: LocalDateTime?) = apply { this.createdDate = createdDate }
         fun updateDate(updateDate: LocalDateTime?) = apply { this.updateDate = updateDate }
-        fun username(title: String?) = apply { this.username = username }
+        fun username(username: String?) = apply { this.username = username }
         fun password(password: String?) = apply { this.password = password }
         fun email(email: String?) = apply { this.email = email }
         fun role(role: Role?) = apply { this.role = role }

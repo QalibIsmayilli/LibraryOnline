@@ -17,7 +17,7 @@ data class UserSaveRequest(
         var role: Role? = null
     ) {
 
-        fun username(title: String?) = apply { this.username = username }
+        fun username(username: String?) = apply { this.username = username }
         fun password(password: String?) = apply { this.password = password }
         fun email(email: String?) = apply { this.email = email }
         fun role(role: Role?) = apply { this.role = role }
