@@ -1,6 +1,7 @@
 package com.company.library.service;
 
 import com.company.library.dto.TokenResponse;
+import com.company.library.dto.UserDto;
 import com.company.library.dto.requests.LoginRequest;
 import com.company.library.exception.GenericException;
 import com.company.library.util.TokenGenerator;
@@ -8,6 +9,8 @@ import org.springframework.http.HttpStatus;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Service;
 
 @Service
@@ -33,5 +36,11 @@ public class AuthService {
         }catch (Exception ex){
             throw new GenericException(HttpStatus.NOT_FOUND,"User Not Found");
         }
+    }
+
+    public UserDto getLoggedInUser(){
+        String username = ((UserDetails)SecurityContextHolder.getContext().getAuthentication().getPrincipal())
+                .getUsername();
+        return userService.findUserDtoByUsername(username);
     }
 }

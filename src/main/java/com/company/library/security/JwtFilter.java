@@ -52,8 +52,6 @@ public class JwtFilter extends OncePerRequestFilter {
             logger.error("error->" + ex.getMessage());
             sendError(response,ex);
         }
-
-
     }
 
 

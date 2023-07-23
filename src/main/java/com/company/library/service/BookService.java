@@ -5,7 +5,7 @@ import com.company.library.dto.BookResponse;
 import com.company.library.dto.requests.BookSaveRequest;
 import com.company.library.model.Book;
 import com.company.library.model.BookStatus;
-import com.company.library.model.Image;
+import com.company.library.model.User;
 import com.company.library.repository.BookRepository;
 import jakarta.transaction.Transactional;
 import org.jetbrains.annotations.NotNull;
@@ -14,7 +14,6 @@ import org.springframework.stereotype.Service;
 
 
 import java.util.List;
-import java.util.Optional;
 import java.util.stream.Collectors;
 
 @Service
@@ -22,10 +21,14 @@ public class BookService {
 
     private final BookRepository bookRepository;
     private final CategoryService categoryService;
+    private final UserService userService;
+    private final AuthService authService;
 
-    public BookService(BookRepository bookRepository, CategoryService categoryService) {
+    public BookService(BookRepository bookRepository, CategoryService categoryService, UserService userService, AuthService authService) {
         this.bookRepository = bookRepository;
         this.categoryService = categoryService;
+        this.userService = userService;
+        this.authService = authService;
     }
 
     @Transactional
@@ -51,21 +54,6 @@ public class BookService {
                         .imageUrl(b.getImage().getImageUrl()).build())
                 .collect(Collectors.toList());
     }
-    private static Optional<List<BookResponse>> convertToResponse2(@NotNull List<Book> books) {
-
-
-        boolean a = books.stream().map(b->{ Optional<Image> image = Optional.ofNullable(b.getImage());
-        if(image.isPresent()){return true;}else{return false;}}).isParallel();
-
-        if(a){
-            return Optional.of(books.stream().map(b -> new BookResponse.Builder().id(b.getId())
-                        .title(b.getTitle()).authorName(b.getAuthorName())
-                        .imageUrl(b.getImage().getImageUrl()).build())
-                .collect(Collectors.toList()));
-        }else {
-            return null;
-        }
-    }
 
 
 
@@ -80,7 +68,9 @@ public class BookService {
     }
 
     public List<BookResponse> searchByBookStatus(BookStatus bookStatus) {
-        List<Book> books = bookRepository.getBooksByBookStatus(bookStatus);
+        User user = userService.findUserByUsername(authService.getLoggedInUser().getUsername());
+
+        List<Book> books = bookRepository.getBooksByBookStatusAndUserId(bookStatus,user.getId());
         return convertToResponse(books);
     }
 

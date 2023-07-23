@@ -49,7 +49,7 @@ public class SecurityConfig {
                 .cors().and()
                 .authorizeHttpRequests( auth->{
                     auth.requestMatchers("/api/admin/**").hasAuthority("ADMIN");
-                    auth.requestMatchers("/api/user/**").hasAuthority("USER");
+                    auth.requestMatchers("/api/user/**").hasAnyAuthority("USER","ADMIN");
                     auth.anyRequest().authenticated();
                         })
                 .formLogin(fl->fl.disable())
@@ -68,7 +68,7 @@ public class SecurityConfig {
     }
 
     @Bean
-    public WebMvcConfigurer configurer(){
+    public WebMvcConfigurer corsConfigurer(){
         return new WebMvcConfigurer() {
             @Override
             public void addCorsMappings(CorsRegistry registry) {

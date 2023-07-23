@@ -22,7 +22,7 @@ public class UserDetailsServiceImpl implements UserDetailsService {
         User user = userService.findUserByUsername(username);
 
         var roles = Stream.of(user.getRole())
-                .map(x -> new SimpleGrantedAuthority(x.name()))
+                .map(role -> new SimpleGrantedAuthority(role.name()))
                 .toList();
 
 
