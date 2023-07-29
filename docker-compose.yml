@@ -1,0 +1,12 @@
+version:
+
+
+services:
+  redisdb:
+    image: "redis"
+    ports:
+      - "6379:6379"
+    environment:
+      - ALLOW_EMPTY_PASSWORD=yes
+    networks:
+      - shared-net

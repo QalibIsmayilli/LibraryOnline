@@ -18,6 +18,7 @@ import java.io.IOException;
 import java.util.HashMap;
 import java.util.Map;
 
+
 @Component
 public class JwtFilter extends OncePerRequestFilter {
 
@@ -65,7 +66,7 @@ public class JwtFilter extends OncePerRequestFilter {
 
     private void sendError(HttpServletResponse res, Exception e) throws IOException {
         res.setContentType("application/json");
-        Map<String, String> errors = new HashMap<>();
+        Map<String,String> errors = new HashMap<>();
         res.setStatus(HttpServletResponse.SC_UNAUTHORIZED);
         errors.put("error", e.getMessage());
         ObjectMapper mapper = new ObjectMapper();
