@@ -1,4 +1,4 @@
-version:
+version: '3.7'
 
 
 services:
@@ -10,3 +10,24 @@ services:
       - ALLOW_EMPTY_PASSWORD=yes
     networks:
       - shared-net
+
+  mysqldb:
+    image: "mysql:8"
+    restart: always
+    environment:
+      MYSQL_DATABASE: library
+      MYSQL_PASSWORD: ismayilov10
+    ports:
+      - "3306:3306"
+    networks:
+      - shared-net
+    volumes:
+      - ./mysql/data:/backup
+
+networks:
+  shared-net:
+    driver: bridge
+
+
+
+

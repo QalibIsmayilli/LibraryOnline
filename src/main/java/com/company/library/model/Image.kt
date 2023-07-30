@@ -23,7 +23,7 @@ data class Image private constructor(
     @UpdateTimestamp
     val updateDate: LocalDateTime?,
 
-    @Column(name = "umage_url")
+    @Column(name = "image_url")
     val imageUrl : String?
 ){
 
